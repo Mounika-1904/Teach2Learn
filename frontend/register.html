@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Teach2Learn</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="auth-body">
+
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">Teach2Learn</a>
+            <a href="index.html" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            <h2 class="auth-title">Create Account</h2>
+            <p class="auth-subtitle">Join our community of learners and educators</p>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="student">I am a Student</button>
+                <button class="auth-tab" data-tab="tutor">I am a Tutor</button>
+            </div>
+
+            <form action="student-dashboard.html" class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Create a password" required>
+                </div>
+
+                <!-- Student Specific Fields -->
+                <div id="student-fields" class="role-fields">
+                    <div class="form-group">
+                        <label for="class-level">Class / Level</label>
+                        <select id="class-level">
+                            <option value="">Select your level</option>
+                            <option value="primary">Primary School</option>
+                            <option value="highschool">High School</option>
+                            <option value="undergrad">Undergraduate</option>
+                            <option value="adult">Adult Learner</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="interests">Interests (e.g., Math, Piano, Coding)</label>
+                        <input type="text" id="interests" placeholder="Comma separated interests">
+                    </div>
+                </div>
+
+                <!-- Tutor Specific Fields -->
+                <div id="tutor-fields" class="role-fields hidden">
+                    <div class="form-group">
+                        <label for="subjects">Subjects you teach</label>
+                        <input type="text" id="subjects" placeholder="e.g., Mathematics, Physics, English">
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Years of Experience</label>
+                        <select id="experience">
+                            <option value="0-2">0-2 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="5+">5+ years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="availability">Preferred Availability (e.g. Mon-Fri 9AM-5PM)</label>
+                        <input type="text" id="availability" placeholder="Your general available timings">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </div>
+            </form>
+
+            <p class="auth-footer">
+                Already have an account? <a href="login.html">Login</a>
+            </p>
+        </div>
+
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2" style="animation-delay: -2s;"></div>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

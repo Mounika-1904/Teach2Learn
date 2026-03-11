@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Teach2Learn</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h2>Teach2Learn</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-section="overview">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>System Overview</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="users">
+                    <i class="fas fa-user-shield"></i>
+                    <span>User Management</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="feedback">
+                    <i class="fas fa-star"></i>
+                    <span>Global Feedback</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>System Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer" style="margin-top: auto;">
+                <a href="index.html" class="sidebar-link logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="dashboard-header">
+                <div class="header-search-container">
+                    <div class="header-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="global-search" placeholder="Search system logs or users..."
+                            autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <div class="notification-wrapper">
+                        <div class="notification-bell" id="notif-bell">
+                            <i class="fas fa-bell"></i>
+                            <span class="notif-badge hidden" id="notif-count">0</span>
+                        </div>
+                        <div class="notif-dropdown hidden" id="notif-dropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4>
+                                <button id="mark-all-read">Mark all as read</button>
+                            </div>
+                            <div class="notif-list" id="notif-list">
+                                <p class="empty-text">No notifications</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="header-user">
+                        <div class="user-info">
+                            <h4 id="header-user-name">System Admin</h4>
+                            <p>Super Admin</p>
+                        </div>
+                        <div id="header-avatar" class="user-avatar" style="display: flex; align-items: center; justify-content: center; background: var(--primary); color: white; font-weight: 700;">AD</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SECTIONS -->
+
+            <!-- 1. OVERVIEW SECTION -->
+            <section id="overview" class="dashboard-section active">
+                <div class="welcome-banner">
+                    <div class="welcome-text">
+                        <h1>Admin Control Panel</h1>
+                        <p>Monitoring system performance and user activity.</p>
+                    </div>
+                </div>
+
+                <!-- METRICS GRID -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background: rgba(108, 99, 255, 0.1); color: var(--primary);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Total Users</h4>
+                            <h3>1,248</h3>
+                            <span class="metric-trend trend-up"><i class="fas fa-arrow-up"></i> 12% increase</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Active Tutors</h4>
+                            <h3>156</h3>
+                            <span class="metric-trend trend-up"><i class="fas fa-arrow-up"></i> 5 new today</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Total Bookings</h4>
+                            <h3>8,420</h3>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Reports</h4>
+                            <h3>3</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid-2">
+                    <!-- User Activity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>User Registration Trend</h3>
+                        </div>
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="registrationChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- System Health -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>System Health</h3>
+                        </div>
+                        <div class="status-list">
+                            <div class="status-item" style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border-color);">
+                                <span>API Server</span>
+                                <span class="badge badge-success" style="background: var(--success); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">Online</span>
+                            </div>
+                            <div class="status-item" style="display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border-color);">
+                                <span>Database</span>
+                                <span class="badge badge-success" style="background: var(--success); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">Connected</span>
+                            </div>
+                            <div class="status-item" style="display: flex; justify-content: space-between; padding: 1rem 0;">
+                                <span>ML Engine</span>
+                                <span class="badge badge-success" style="background: var(--success); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">Running</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. USER MANAGEMENT SECTION -->
+            <section id="users" class="dashboard-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>User Management</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Manage all students and tutors in the system.</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-table-body">
+                                <tr><td colspan="5" class="text-center">Loading users...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. GLOBAL FEEDBACK SECTION -->
+            <section id="feedback" class="dashboard-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Global Feedback</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">View all feedback from students across the platform.</p>
+                    </div>
+                    <div id="feedback-list-container" style="display: flex; flex-direction: column; gap: 1rem; padding: 1.5rem;">
+                        <p class="empty-text">Loading feedback...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. SYSTEM SETTINGS SECTION -->
+            <section id="settings" class="dashboard-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>System Settings</h3>
+                    </div>
+                    <div class="card-body" style="padding: 2rem;">
+                        <form id="settings-form">
+                            <div class="form-group">
+                                <label>Project Name</label>
+                                <input type="text" value="Teach2Learn" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Maintenance Mode</label>
+                                <select disabled>
+                                    <option>Off</option>
+                                    <option>On</option>
+                                </select>
+                            </div>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">System settings are currently managed via config files.</p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             // Auth Check
+             const user = JSON.parse(localStorage.getItem('user'));
+             if (!user || user.role !== 'admin') {
+                 window.location.href = 'login.html';
+                 return;
+             }
+
+             // Populate User Info
+             document.getElementById('header-user-name').textContent = user.name;
+             const avatar = document.getElementById('header-avatar');
+             if (avatar) avatar.textContent = user.name.substring(0, 2).toUpperCase();
+
+             // POPULATE DATA
+             async function loadUsers() {
+                 try {
+                     const res = await fetch('http://127.0.0.1:5000/api/admin/users');
+                     const users = await res.json();
+                     const tbody = document.getElementById('user-table-body');
+                     if (!tbody) return;
+                     tbody.innerHTML = '';
+                     users.forEach(u => {
+                         const tr = document.createElement('tr');
+                         tr.innerHTML = `
+                             <td>${u.id}</td>
+                             <td>${u.name}</td>
+                             <td>${u.email}</td>
+                             <td><span class="badge" style="background: ${u.role === 'tutor' ? 'var(--primary)' : 'var(--success)'}; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">${u.role}</span></td>
+                             <td>
+                                 <button class="btn btn-sm btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="removeUser(${u.id}, '${u.name}')">
+                                     <i class="fas fa-trash"></i> Remove
+                                 </button>
+                             </td>
+                         `;
+                         tbody.appendChild(tr);
+                     });
+                 } catch (err) { console.error(err); }
+             }
+
+             window.removeUser = async function(userId, userName) {
+                 if (!confirm(`Are you sure you want to remove user "${userName}"? This will delete all their data.`)) {
+                     return;
+                 }
+
+                 try {
+                     const res = await fetch(`http://127.0.0.1:5000/api/admin/users/${userId}`, {
+                         method: 'DELETE'
+                     });
+                     const data = await res.json();
+                     if (res.ok) {
+                         alert(data.message);
+                         loadUsers(); // Refresh the list
+                     } else {
+                         alert(data.error || 'Failed to remove user');
+                     }
+                 } catch (err) {
+                     console.error(err);
+                     alert('Connection error');
+                 }
+             };
+
+             async function loadFeedback() {
+                 try {
+                     const res = await fetch('http://127.0.0.1:5000/api/admin/feedback');
+                     const feedbacks = await res.json();
+                     const container = document.getElementById('feedback-list-container');
+                     if (!container) return;
+                     container.innerHTML = feedbacks.length ? '' : '<p class="empty-text">No feedback found.</p>';
+                     feedbacks.forEach(f => {
+                         const card = document.createElement('div');
+                         card.style.background = 'var(--bg-light)';
+                         card.style.padding = '1.5rem';
+                         card.style.borderRadius = '12px';
+                         card.style.border = '1px solid var(--border-color)';
+                         card.innerHTML = `
+                             <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
+                                 <strong>${f.student_name} → ${f.tutor_name}</strong>
+                                 <span style="color: var(--warning);"><i class="fas fa-star"></i> ${f.rating}/5</span>
+                             </div>
+                             <p style="margin-bottom: 0.5rem;">${f.comment || '<i>No comment provided</i>'}</p>
+                             <div style="font-size: 0.8rem; color: var(--text-muted);">Skill Level: ${f.skill_level || 'N/A'}</div>
+                         `;
+                         container.appendChild(card);
+                     });
+                 } catch (err) { console.error(err); }
+             }
+
+             // SPA Navigation
+             const sidebarLinks = document.querySelectorAll('.sidebar-link[data-section]');
+             const sections = document.querySelectorAll('.dashboard-section');
+
+             sidebarLinks.forEach(link => {
+                 link.addEventListener('click', (e) => {
+                     if (link.classList.contains('logout')) return;
+                     e.preventDefault();
+                     const target = link.getAttribute('data-section');
+                     switchSection(target);
+                 });
+             });
+
+             function switchSection(target) {
+                 sidebarLinks.forEach(l => l.classList.remove('active'));
+                 const activeLink = document.querySelector(`.sidebar-link[data-section="${target}"]`);
+                 if (activeLink) activeLink.classList.add('active');
+
+                 sections.forEach(s => s.classList.remove('active'));
+                 const activeSec = document.getElementById(target);
+                 if (activeSec) activeSec.classList.add('active');
+
+                 if (target === 'users') loadUsers();
+                 if (target === 'feedback') loadFeedback();
+             }
+
+             // Registration Chart
+             const regElem = document.getElementById('registrationChart');
+             if (regElem) {
+                 const ctx = regElem.getContext('2d');
+                 new Chart(ctx, {
+                     type: 'line',
+                     data: {
+                         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                         datasets: [{
+                             label: 'New Users',
+                             data: [65, 59, 80, 81, 56, 95],
+                             borderColor: '#6C63FF',
+                             tension: 0.4,
+                             fill: true,
+                             backgroundColor: 'rgba(108, 99, 255, 0.1)'
+                         }]
+                     },
+                     options: {
+                         responsive: true,
+                         maintainAspectRatio: false
+                     }
+                 });
+             }
+
+             // Notification Toggle
+             const notifBell = document.getElementById('notif-bell');
+             const notifDropdown = document.getElementById('notif-dropdown');
+             if (notifBell) {
+                 notifBell.onclick = (e) => {
+                     e.stopPropagation();
+                     notifDropdown.classList.toggle('hidden');
+                 };
+             }
+             window.onclick = () => { if(notifDropdown) notifDropdown.classList.add('hidden'); };
+
+             // Logout
+             const logoutBtn = document.querySelector('.logout');
+             if (logoutBtn) {
+                 logoutBtn.onclick = (e) => {
+                     e.preventDefault();
+                     localStorage.removeItem('user');
+                     window.location.href = 'login.html';
+                 };
+             }
+        });
+    </script>
+</body>
+
+</html>

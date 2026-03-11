@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+.env
+
+# Secret variables
+backend/.env
+
+# Databases
+*.sqlite3
+backend/instance/
+instance/
+
+# Folders to exclude if not needed for production
+screenshots/
+backend.zip
+frontend.zip
+WhatsApp Image 2026-01-26 at 8.47.10 PM.jpeg
+
+# OS
+.DS_Store
+Thumbs.db

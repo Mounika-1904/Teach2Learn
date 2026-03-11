@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Teach2Learn</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h2>Teach2Learn</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-section="overview-section">
+                    <i class="fas fa-columns"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="tutors-section">
+                    <i class="fas fa-users"></i>
+                    <span>Find Tutors</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="schedule-section">
+                    <i class="fas fa-calendar"></i>
+                    <span>Schedule</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="messages-section">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="#" class="sidebar-link" data-section="profile-section">
+                    <i class="fas fa-user-circle"></i>
+                    <span>My Profile</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer" style="margin-top: auto;">
+                <a href="index.html" class="sidebar-link logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="dashboard-header">
+                <div class="header-search-container">
+                    <div class="header-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="global-search" placeholder="Search tutors by name or subject..."
+                            autocomplete="off">
+                    </div>
+                    <div id="search-suggestions" class="suggestions-dropdown hidden"></div>
+                </div>
+
+                <div class="header-actions">
+                    <div class="notification-wrapper">
+                        <div class="notification-bell" id="notif-bell">
+                            <i class="fas fa-bell"></i>
+                            <span class="notif-badge hidden" id="notif-count">0</span>
+                        </div>
+                        <div class="notif-dropdown hidden" id="notif-dropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4>
+                                <button id="mark-all-read">Mark all as read</button>
+                            </div>
+                            <div class="notif-list" id="notif-list">
+                                <p class="empty-text">No notifications</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="header-user">
+                        <div class="user-info">
+                            <h4 id="header-user-name">Alex Doe</h4>
+                            <p>Student Account</p>
+                        </div>
+                        <img id="header-avatar" class="user-avatar"
+                            src="https://ui-avatars.com/api/?name=Alex+Doe&background=6C63FF&color=fff" alt="User">
+                    </div>
+                </div>
+            </header>
+
+            <!-- SECTIONS -->
+
+            <!-- 1. OVERVIEW SECTION -->
+            <section id="overview-section" class="dashboard-section active">
+                <div class="welcome-banner">
+                    <div class="welcome-text">
+                        <h1 id="welcome-title">Hello, Alex 👋</h1>
+                        <p>Welcome back to your learning space.</p>
+                    </div>
+                </div>
+
+                <!-- METRICS GRID -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background: rgba(108, 99, 255, 0.1); color: var(--primary);">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Courses Active</h4>
+                            <h3 id="metric-courses">4</h3>
+                            <span class="metric-trend trend-up"><i class="fas fa-arrow-up"></i> 2 this month</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Hours Learned</h4>
+                            <h3 id="metric-hours">47.5</h3>
+                            <span class="metric-trend trend-up"><i class="fas fa-arrow-up"></i> 12.3 this week</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Completion Rate</h4>
+                            <h3 id="metric-completion">78%</h3>
+                            <span class="metric-trend trend-up"><i class="fas fa-arrow-up"></i> 5% vs last month</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="metric-info">
+                            <h4>Avg. Rating Given</h4>
+                            <h3 id="metric-rating">4.8</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid-2">
+                    <!-- Upcoming Classes -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-calendar-alt" style="color: var(--primary);"></i> Upcoming Classes</h3>
+                        </div>
+                        <div class="list-container" id="upcoming-classes-list">
+                            <!-- Populated via JS -->
+                            <div class="loading-state">Loading schedule...</div>
+                        </div>
+                    </div>
+
+                    <!-- Learning Progress -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-tasks" style="color: var(--success);"></i> Learning Progress</h3>
+                        </div>
+                        <div class="progress-section" id="learning-progress-list">
+                            <!-- Populated via JS -->
+                            <div class="loading-state">Loading progress...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RECOMMENDED SECTION -->
+                <div class="dashboard-segment">
+                    <div class="segment-header">
+                        <h2><i class="fas fa-star" style="color: #FFD700;"></i> Recommended For You</h2>
+                        <p>AI-driven matches based on your interests</p>
+                    </div>
+                    <div class="tutors-grid recommended-grid" id="recommendations-list">
+                        <div class="loading-state">
+                            <i class="fas fa-brain fa-spin"></i>
+                            <p>AI is matching you...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. TUTORS SECTION (Search Results) -->
+            <section id="tutors-section" class="dashboard-section hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 id="tutor-section-title">Explore All Tutors</h3>
+                    </div>
+                    <div class="tutors-grid" id="all-tutors-list">
+                        <!-- Tutors or Search Results -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. SCHEDULE SECTION -->
+            <section id="schedule-section" class="dashboard-section hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Your Learning Schedule</h3>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Tutor</th>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schedule-table-body">
+                                <!-- Rows loaded via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. MESSAGES SECTION -->
+            <section id="messages-section" class="dashboard-section hidden">
+                <div class="messages-container">
+                    <div class="contacts-sidebar">
+                        <div class="sidebar-header">
+                            <h3>Messages</h3>
+                        </div>
+                        <div class="contacts-list" id="contacts-list">
+                            <!-- Populated via JS -->
+                            <div class="loading-state">Loading tutors...</div>
+                        </div>
+                    </div>
+                    <div class="chat-area">
+                        <div class="chat-header" id="chat-header">
+                            <div class="selected-user-info" style="display: none;">
+                                <div class="user-avatar" id="chat-avatar" style="width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">TU</div>
+                                <div class="chat-user-details" style="margin-left: 12px;">
+                                    <h4 id="chat-user-name" style="margin: 0;">Select a tutor</h4>
+                                    <p id="chat-user-status" style="margin: 0; font-size: 0.8rem; color: var(--success);">Online</p>
+                                </div>
+                            </div>
+                            <div class="chat-placeholder">
+                                <h3>Select a conversation to start chatting</h3>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="message-list">
+                            <!-- Messages will appear here -->
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="file" id="file-input" style="display: none;" accept="image/*,.pdf,.doc,.docx,.txt">
+                            <button id="attach-btn" class="attachment-btn" title="Attach file">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <input type="text" id="message-input" placeholder="Type a message..." disabled>
+                            <button id="send-msg-btn" class="btn btn-primary" style="padding: 0.8rem 1.2rem;" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. PROFILE SECTION -->
+            <section id="profile-section" class="dashboard-section hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>My Profile</h3>
+                        <button class="btn btn-outline" id="edit-profile-btn">Edit Profile</button>
+                    </div>
+
+                    <div style="display: flex; gap: 3rem; align-items: flex-start;">
+                        <div style="text-align: center;">
+                            <img id="profile-avatar" class="user-avatar"
+                                style="width: 120px; height: 120px; margin-bottom: 1rem;"
+                                src="https://ui-avatars.com/api/?name=Alex+Doe&background=6C63FF&color=fff"
+                                alt="Avatar">
+                            <h4 id="profile-name">Alex Mogalapalli</h4>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Student Account</p>
+                        </div>
+
+                        <form id="profile-form" style="flex: 1;">
+                            <div class="section-grid">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="prof-name" disabled
+                                        style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="prof-email" disabled
+                                        style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="text" id="prof-phone" disabled
+                                        style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                                </div>
+                                <div class="form-group">
+                                    <label>Interests</label>
+                                    <input type="text" id="prof-interests" disabled
+                                        style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                                </div>
+                            </div>
+                            <div class="form-actions hidden" id="profile-actions"
+                                style="margin-top: 2rem; display: flex; gap: 1rem;">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-profile-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Skill Level Modal -->
+    <div class="modal" id="skill-level-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Select Your Knowledge Level</h3>
+                <button class="close-modal close-skill-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.95rem;">To give you the best personalized tutor recommendations for <strong id="skill-subject-name"></strong>, please rate your current skill level in this subject:</p>
+                <form id="skill-level-form">
+                    <input type="hidden" id="skill-target-subject">
+                    <div class="form-group">
+                        <select id="modal-skill-level" required>
+                            <option value="" disabled selected>Select Level</option>
+                            <option value="Weak">Weak</option>
+                            <option value="Average">Average</option>
+                            <option value="Good">Good</option>
+                            <option value="Excellent">Excellent</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Show Recommendations</button>
+                    <button type="button" class="btn btn-secondary btn-block" style="margin-top:0.5rem;" id="skip-skill-btn">Skip & Search</button>
+                </form>
+            </div>
+        </div>
+    </div>    <!-- Feedback Modal -->
+    <div class="modal" id="feedback-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3>Rate Your Session</h3>
+                <button class="close-modal close-feedback-modal">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <div id="feedback-context" style="text-align: center; margin-bottom: 2rem;">
+                    <div style="width: 70px; height: 70px; background: rgba(108, 99, 255, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h4 id="feedback-tutor-name" style="margin-bottom: 0.2rem;">Tutor Name</h4>
+                    <p id="feedback-subject-display" style="color: var(--text-muted); font-size: 0.9rem;">Subject Name</p>
+                </div>
+
+                <form id="feedback-form">
+                    <input type="hidden" id="feedback-tutor-id">
+                    <input type="hidden" id="feedback-subject">
+                    <input type="hidden" id="feedback-rating" value="5">
+                    
+                    <div class="form-group" style="text-align: center; margin-bottom: 2rem;">
+                        <label style="display: block; margin-bottom: 1rem; font-weight: 600;">Overall Rating</label>
+                        <div class="star-rating" id="star-rating-container" style="font-size: 2rem; color: #cbd5e1; cursor: pointer; display: flex; justify-content: center; gap: 0.5rem;">
+                            <i class="fas fa-star active" data-value="1" style="color: #FFD700;"></i>
+                            <i class="fas fa-star active" data-value="2" style="color: #FFD700;"></i>
+                            <i class="fas fa-star active" data-value="3" style="color: #FFD700;"></i>
+                            <i class="fas fa-star active" data-value="4" style="color: #FFD700;"></i>
+                            <i class="fas fa-star active" data-value="5" style="color: #FFD700;"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Your Skill Level in <span id="feedback-subj-label">this Subject</span></label>
+                        <select id="feedback-skill-level" required style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <option value="" disabled>Select Level</option>
+                            <option value="Weak">Weak (Need more help)</option>
+                            <option value="Average">Average (Getting there)</option>
+                            <option value="Good" selected>Good (Understanding well)</option>
+                            <option value="Excellent">Excellent (Mastered it)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Comment (Optional)</label>
+                        <textarea id="feedback-comment" rows="3" placeholder="How was your experience with this tutor?" style="width: 100%; border: 1px solid var(--border-color); border-radius: 8px; padding: 0.8rem;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" style="padding: 1rem;">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </div>iv>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="booking-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Book a Session</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="booking-form">
+                    <input type="hidden" id="modal-tutor-id">
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" id="modal-subject" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Date</label>
+                        <input type="date" id="modal-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Time</label>
+                        <input type="time" id="modal-time" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>

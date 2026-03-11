@@ -1,0 +1,53 @@
+📌 Project Title
+Teach2Learn: An AI‑Driven Personalized Tutor Recommendation System
+
+📝 Project Name Explanation (2–3 lines)
+Teach2Learn represents a smart learning platform where students can easily find suitable tutors and engage in peer‑to‑peer learning. The system uses Artificial Intelligence to analyze learning needs and recommend the best tutors, making teaching and learning more effective.
+
+🌐 Domain
+Artificial Intelligence
+
+Machine Learning
+
+Deep Learning
+
+
+
+🛠️ Technologies Used
+🔹 Frontend
+HTML
+
+CSS
+
+JavaScript
+
+🔹 Backend
+Python
+
+Flask
+
+🔹 Database
+MySQL / SQLite
+
+🔹 AI / ML
+Machine Learning (Scikit‑learn)
+
+Deep Learning (TensorFlow / Keras)
+
+👥 Users of the Application
+Students – to find suitable tutors
+
+Tutors – to offer teaching services
+
+Admin – to manage users and system data
+
+📊 Data‑Driven Approach
+Teach2Learn is a data‑driven system that works based on user data such as:
+
+Student academic details and preferences
+
+Tutor expertise, experience, and ratings
+
+Feedback provided after learning sessions
+
+The AI model analyzes this data to generate personalized tutor recommendations and continuously improves results using feedback.

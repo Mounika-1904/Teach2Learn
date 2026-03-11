@@ -1,0 +1,9 @@
+flask
+flask-sqlalchemy
+flask-cors
+scikit-learn
+tensorflow
+keras
+psycopg2-binary
+flask-migrate
+python-dotenv
