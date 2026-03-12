@@ -2,23 +2,22 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from config import Config
 from flask_migrate import Migrate
-from models import db
-from routes import main
-
-import os
-
 def create_app(config_class=Config):
     # Set static folder to sibling frontend directory
     frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
     app = Flask(__name__, static_folder=frontend_dir, static_url_path='')
     app.config.from_object(config_class)
 
-    # Initialize extensions
+    # 1. Imports inside to ensure correct initialization order
+    from models import db
+    from routes import main
+
+    # 2. Initialize extensions
     CORS(app)
     db.init_app(app)
     migrate = Migrate(app, db)
 
-    # 1. Register blueprints first
+    # 3. Register blueprints
     app.register_blueprint(main)
 
     # 2. Specific API/Health routes
