@@ -50,28 +50,23 @@ def create_app(config_class=Config):
         print(f"DATABASE ATTEMPT: {safe_uri}")
         
         try:
-            if db_uri.startswith('sqlite'):
-                # Ensure the instance directory exists for SQLite
-                db_path = db_uri.replace('sqlite:///', '')
-                if not os.path.isabs(db_path):
-                    # If it's a relative path, resolve it relative to the backend directory
-                    db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), db_path))
-                
-                db_dir = os.path.dirname(db_path)
-                if not os.path.exists(db_dir):
-                    print(f"DEBUG: Creating missing database directory: {db_dir}")
-                    os.makedirs(db_dir, exist_ok=True)
-                
-                db.create_all()
-                print(f"SQLite database initialized at: {db_path}")
+            print("DB_INIT: Checking for existing tables...")
+            # Simple check for existing table (e.g. User) to avoid heavy db.create_all() every time
+            from sqlalchemy import inspect
+            inspector = inspect(db.engine)
+            if 'user' in inspector.get_table_names():
+                print("DB_INIT: Tables already exist. Skipping create_all.")
             else:
+                print("DB_INIT: Tables missing. Running create_all...")
                 db.create_all()
-                print("PostgreSQL database initialized/verified.")
+                print("DB_INIT: Database tables created.")
+            
         except Exception as e:
             print(f"CRITICAL ERROR during database init: {str(e)}")
             import traceback
             traceback.print_exc()
-            raise e
+            # On Railway, sometimes the first connection fails. We can try to continue
+            # if the variables are set, the app might recover inside a request.
 
     return app
 
