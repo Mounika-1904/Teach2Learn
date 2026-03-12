@@ -18,9 +18,9 @@ instance/
 test_instance/
 
 # Folders to exclude if not needed for production
-screenshots/
-backend.zip
-frontend.zip
+Teach2Learn.docx
+Teach2Learn_doc.pdf
+Teach2Learn_ppt.pptx
 WhatsApp Image 2026-01-26 at 8.47.10 PM.jpeg
 
 # OS

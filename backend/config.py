@@ -2,7 +2,11 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
-print(f"DEBUG: Loading config. DATABASE_URL from env: {bool(os.environ.get('DATABASE_URL'))}")
+db_url = os.environ.get('DATABASE_URL')
+if db_url:
+    print(f"DEBUG: Using DATABASE_URL from environment (starts with: {db_url[:10]}...)")
+else:
+    print("DEBUG: DATABASE_URL not found in environment. Falling back to SQLite.")
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key'

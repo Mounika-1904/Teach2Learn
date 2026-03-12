@@ -51,8 +51,19 @@ def create_app(config_class=Config):
         
         try:
             if db_uri.startswith('sqlite'):
+                # Ensure the instance directory exists for SQLite
+                db_path = db_uri.replace('sqlite:///', '')
+                if not os.path.isabs(db_path):
+                    # If it's a relative path, resolve it relative to the backend directory
+                    db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), db_path))
+                
+                db_dir = os.path.dirname(db_path)
+                if not os.path.exists(db_dir):
+                    print(f"DEBUG: Creating missing database directory: {db_dir}")
+                    os.makedirs(db_dir, exist_ok=True)
+                
                 db.create_all()
-                print("SQLite database initialized.")
+                print(f"SQLite database initialized at: {db_path}")
             else:
                 print("PostgreSQL mode detected. Skipping db.create_all() to avoid startup delay.")
         except Exception as e:
