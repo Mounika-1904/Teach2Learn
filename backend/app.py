@@ -68,8 +68,9 @@ def create_app(config_class=Config):
                 db.create_all()
                 print("PostgreSQL database initialized/verified.")
         except Exception as e:
-            print(f"CRITICAL ERROR during database init: {e}")
-            # Don't let the crash happen silently
+            print(f"CRITICAL ERROR during database init: {str(e)}")
+            import traceback
+            traceback.print_exc()
             raise e
 
     return app

@@ -13,8 +13,14 @@ class Config:
     
     # Database Configuration
     _db_url = os.environ.get('DATABASE_URL')
-    if _db_url and _db_url.startswith("postgres://"):
-        _db_url = _db_url.replace("postgres://", "postgresql://", 1)
+    if _db_url:
+        if _db_url.startswith("postgres://"):
+            _db_url = _db_url.replace("postgres://", "postgresql://", 1)
+        
+        # Supabase requires SSL. Ensure sslmode=require is in the URL if not present.
+        if "postgresql" in _db_url and "sslmode=" not in _db_url:
+            separator = "&" if "?" in _db_url else "?"
+            _db_url += f"{separator}sslmode=require"
     
     SQLALCHEMY_DATABASE_URI = _db_url or f"sqlite:///{os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'instance', 'database.db'))}"
     
