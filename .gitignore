@@ -15,6 +15,7 @@ backend/.env
 *.sqlite3
 backend/instance/
 instance/
+test_instance/
 
 # Folders to exclude if not needed for production
 screenshots/
