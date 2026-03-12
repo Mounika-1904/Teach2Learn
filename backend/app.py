@@ -33,9 +33,24 @@ def create_app(config_class=Config):
 
     @app.route('/<path:path>')
     def serve_static(path):
+        # PROTECT API ROUTES: If the path starts with api/, let it fall through 
+        # to the blueprint or return a proper 404 instead of index.html
+        if path.startswith('api/'):
+            return jsonify({"error": "API route not found"}), 404
+            
         if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
             return app.send_static_file(path)
         return app.send_static_file('index.html')
+
+    @app.route('/debug/routes')
+    def list_routes():
+        import urllib
+        output = []
+        for rule in app.url_map.iter_rules():
+            methods = ','.join(rule.methods)
+            line = urllib.parse.unquote(f"{rule.endpoint:50s} {methods:20s} {rule}")
+            output.append(line)
+        return "<pre>" + "\n".join(sorted(output)) + "</pre>"
 
     # Database initialization
     with app.app_context():
