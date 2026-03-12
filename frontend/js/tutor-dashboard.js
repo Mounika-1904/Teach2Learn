@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.className = `notif-item ${n.is_read ? '' : 'unread'}`;
                 item.innerHTML = `<p>${n.message}</p><span>${n.created_at}</span>`;
                 item.onclick = async () => {
-                    await fetch(`http://127.0.0.1:5000/api/notifications/read/${n.id}`, { method: 'POST' });
+                    await fetch(`https://teach2learn-production.up.railway.app/api/notifications/read/${n.id}`, { method: 'POST' });
                     item.classList.remove('unread');
                     checkNotificationCount();
                 };
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadChatMessages() {
         if (!activeChatUserId) return;
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/messages/${userId}?other_id=${activeChatUserId}`);
+            const res = await fetch(`https://teach2learn-production.up.railway.app/api/messages/${userId}?other_id=${activeChatUserId}`);
             const messages = await res.json();
             const list = document.getElementById('message-list');
             if (!list) return;
@@ -243,14 +243,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 try {
                     attachBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                    const res = await fetch('http://127.0.0.1:5000/api/upload', {
+                    const res = await fetch('https://teach2learn-production.up.railway.app/api/upload', {
                         method: 'POST',
                         body: formData
                     });
                     const data = await res.json();
                     if (res.ok) {
                         // Send message with file_url immediately
-                        await fetch('http://127.0.0.1:5000/api/messages', {
+                        await fetch('https://teach2learn-production.up.railway.app/api/messages', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ 
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadTutorProfile() {
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/profile/tutor/${tutorId}`);
+            const res = await fetch(`https://teach2learn-production.up.railway.app/api/profile/tutor/${tutorId}`);
             const data = await res.json();
             const n = document.getElementById('t-prof-name'); if(n) n.value = data.name;
             const e = document.getElementById('t-prof-email'); if(e) e.value = data.email;
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveAvailBtn.onclick = async () => {
             const availability = document.getElementById('tutor-availability-input').value;
             try {
-                const res = await fetch('http://127.0.0.1:5000/api/tutor/availability', {
+                const res = await fetch('https://teach2learn-production.up.railway.app/api/tutor/availability', {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tutor_id: tutorId, availability_info: availability })

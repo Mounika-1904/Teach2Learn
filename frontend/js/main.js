@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/register', {
+                const response = await fetch('https://teach2learn-production.up.railway.app/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/login', {
+                const response = await fetch('https://teach2learn-production.up.railway.app/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!query) return;
 
                 try {
-                    const response = await fetch(`http://127.0.0.1:5000/api/tutors/search?q=${encodeURIComponent(query)}`);
+                    const response = await fetch(`https://teach2learn-production.up.railway.app/api/tutors/search?q=${encodeURIComponent(query)}`);
                     const tutors = await response.json();
 
                     const tutorsList = document.querySelector('.tutors-list');

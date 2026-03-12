@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelProfileBtn = document.getElementById('cancel-profile-btn');
     const profileActions = document.getElementById('profile-actions');
 
-    const API_BASE = 'http://127.0.0.1:5000/api';
+    const API_BASE = 'https://teach2learn-production.up.railway.app/api';
 
     // --- Auth Check ---
     const user = JSON.parse(localStorage.getItem('user'));

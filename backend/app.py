@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 from config import Config
 from flask_migrate import Migrate
@@ -21,6 +21,11 @@ def create_app(config_class=Config):
     # Register blueprints
     app.register_blueprint(main)
 
+    # Health check endpoint
+    @app.route('/api/health')
+    def health_check():
+        return jsonify({"status": "healthy", "service": "teach2learn-backend"}), 200
+
     # Route to serve frontend files
     @app.route('/')
     def index():
@@ -42,7 +47,3 @@ def create_app(config_class=Config):
 
     return app
 
-if __name__ == '__main__':
-    app = create_app()
-    print("Backend running on port 5000")
-    app.run(port=5000, debug=True)
