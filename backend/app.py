@@ -13,6 +13,11 @@ def create_app(config_class=Config):
     app = Flask(__name__, static_folder=frontend_dir, static_url_path='')
     app.config.from_object(config_class)
 
+    # Initialize extensions
+    CORS(app)
+    db.init_app(app)
+    migrate = Migrate(app, db)
+
     # 1. Register blueprints first
     app.register_blueprint(main)
 
