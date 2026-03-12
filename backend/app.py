@@ -39,11 +39,26 @@ def create_app(config_class=Config):
 
     # Database initialization
     with app.app_context():
-        if app.config.get('SQLALCHEMY_DATABASE_URI', '').startswith('sqlite'):
-            db.create_all()
-            print("SQLite initialized successfully.")
-        else:
-            print("Running in PostgreSQL mode. Tables should be created via 'flask db upgrade'.")
+        db_uri = app.config.get('SQLALCHEMY_DATABASE_URI', '')
+        # Mask password for logs
+        safe_uri = db_uri
+        if '@' in db_uri:
+            parts = db_uri.split('@')
+            safe_uri = parts[0].split(':')[:2] # protocol and user
+            safe_uri = ":".join(safe_uri) + ":****@" + parts[1]
+        
+        print(f"DATABASE ATTEMPT: {safe_uri}")
+        
+        try:
+            if db_uri.startswith('sqlite'):
+                db.create_all()
+                print("SQLite database initialized.")
+            else:
+                print("PostgreSQL mode detected. Skipping db.create_all() to avoid startup delay.")
+        except Exception as e:
+            print(f"CRITICAL ERROR during database init: {e}")
+            # Don't let the crash happen silently
+            raise e
 
     return app
 
