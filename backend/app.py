@@ -65,7 +65,8 @@ def create_app(config_class=Config):
                 db.create_all()
                 print(f"SQLite database initialized at: {db_path}")
             else:
-                print("PostgreSQL mode detected. Skipping db.create_all() to avoid startup delay.")
+                db.create_all()
+                print("PostgreSQL database initialized/verified.")
         except Exception as e:
             print(f"CRITICAL ERROR during database init: {e}")
             # Don't let the crash happen silently

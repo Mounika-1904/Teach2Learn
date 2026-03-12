@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function checkNotificationCount() {
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/notifications/${userId}`);
+            const res = await fetch(`/api/notifications/${userId}`);
             const data = await res.json();
             const unreadCount = data.filter(n => !n.is_read).length;
             const badge = document.getElementById('notif-count');
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!container) return;
         container.innerHTML = '<div class="loading-state">Loading...</div>';
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/notifications/${userId}`);
+            const res = await fetch(`/api/notifications/${userId}`);
             const data = await res.json();
             container.innerHTML = '';
             if (data.length === 0) {
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.className = `notif-item ${n.is_read ? '' : 'unread'}`;
                 item.innerHTML = `<p>${n.message}</p><span>${n.created_at}</span>`;
                 item.onclick = async () => {
-                    await fetch(`https://teach2learn-production.up.railway.app/api/notifications/read/${n.id}`, { method: 'POST' });
+                    await fetch(`/api/notifications/read/${n.id}`, { method: 'POST' });
                     item.classList.remove('unread');
                     checkNotificationCount();
                 };
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- MESSAGING ---
     async function loadMessaging() {
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/schedules/tutor/${tutorId}`);
+            const res = await fetch(`/api/schedules/tutor/${tutorId}`);
             const sessions = await res.json();
             const students = [];
             const seen = new Set();
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadChatMessages() {
         if (!activeChatUserId) return;
         try {
-            const res = await fetch(`https://teach2learn-production.up.railway.app/api/messages/${userId}?other_id=${activeChatUserId}`);
+            const res = await fetch(`/api/messages/${userId}?other_id=${activeChatUserId}`);
             const messages = await res.json();
             const list = document.getElementById('message-list');
             if (!list) return;
@@ -243,14 +243,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 try {
                     attachBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                    const res = await fetch('https://teach2learn-production.up.railway.app/api/upload', {
+                    const res = await fetch('/api/upload', {
                         method: 'POST',
                         body: formData
                     });
                     const data = await res.json();
                     if (res.ok) {
                         // Send message with file_url immediately
-                        await fetch('https://teach2learn-production.up.railway.app/api/messages', {
+                        await fetch('/api/messages', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ 
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const content = input.value.trim();
             if (!content || !activeChatUserId) return;
             try {
-                await fetch('http://127.0.0.1:5000/api/messages', {
+                await fetch('/api/messages', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ sender_id: userId, receiver_id: activeChatUserId, content: content })
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadOverview() {
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/schedules/tutor/${tutorId}`);
+            const res = await fetch(`/api/schedules/tutor/${tutorId}`);
             const sessions = await res.json();
 
             const studentsCount = new Set(sessions.map(s => s.student_name)).size;
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!tableBody) return;
         tableBody.innerHTML = '<tr><td colspan="5" class="text-center">Loading...</td></tr>';
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/schedules/tutor/${tutorId}`);
+            const res = await fetch(`/api/schedules/tutor/${tutorId}`);
             const sessions = await res.json();
             tableBody.innerHTML = '';
             sessions.forEach(s => {
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadTutorProfile() {
         try {
-            const res = await fetch(`https://teach2learn-production.up.railway.app/api/profile/tutor/${tutorId}`);
+            const res = await fetch(`/api/profile/tutor/${tutorId}`);
             const data = await res.json();
             const n = document.getElementById('t-prof-name'); if(n) n.value = data.name;
             const e = document.getElementById('t-prof-email'); if(e) e.value = data.email;
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveAvailBtn.onclick = async () => {
             const availability = document.getElementById('tutor-availability-input').value;
             try {
-                const res = await fetch('https://teach2learn-production.up.railway.app/api/tutor/availability', {
+                const res = await fetch('/api/tutor/availability', {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ tutor_id: tutorId, availability_info: availability })
