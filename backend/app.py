@@ -13,34 +13,13 @@ def create_app(config_class=Config):
     app = Flask(__name__, static_folder=frontend_dir, static_url_path='')
     app.config.from_object(config_class)
 
-    # Initialize extensions
-    CORS(app)
-    db.init_app(app)
-    migrate = Migrate(app, db)
-
-    # Register blueprints
+    # 1. Register blueprints first
     app.register_blueprint(main)
 
-    # Health check endpoint
+    # 2. Specific API/Health routes
     @app.route('/api/health')
     def health_check():
         return jsonify({"status": "healthy", "service": "teach2learn-backend"}), 200
-
-    # Route to serve frontend files
-    @app.route('/')
-    def index():
-        return app.send_static_file('index.html')
-
-    @app.route('/<path:path>')
-    def serve_static(path):
-        # PROTECT API ROUTES: If the path starts with api/, let it fall through 
-        # to the blueprint or return a proper 404 instead of index.html
-        if path.startswith('api/'):
-            return jsonify({"error": "API route not found"}), 404
-            
-        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-            return app.send_static_file(path)
-        return app.send_static_file('index.html')
 
     @app.route('/debug/routes')
     def list_routes():
@@ -51,6 +30,32 @@ def create_app(config_class=Config):
             line = urllib.parse.unquote(f"{rule.endpoint:50s} {methods:20s} {rule}")
             output.append(line)
         return "<pre>" + "\n".join(sorted(output)) + "</pre>"
+
+    # 3. Static files and Home
+    @app.route('/')
+    def index():
+        return app.send_static_file('index.html')
+
+    @app.route('/<path:path>')
+    def serve_static(path):
+        # Allow specific file paths to be served
+        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+            return app.send_static_file(path)
+        
+        # If it looks like an API call but wasn't caught by the blueprint, it's a 404
+        if path.startswith('api/'):
+            return jsonify({"error": f"API route '{path}' not found"}), 404
+            
+        # Fallback to index for SPA routing
+        return app.send_static_file('index.html')
+
+    # 4. Global Error Logger (Crucial for Railway debugging)
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        print("!!! GLOBAL EXCEPTION CAUGHT !!!")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": "Internal Server Error", "message": str(e)}), 500
 
     # Database initialization
     with app.app_context():
