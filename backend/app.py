@@ -2,6 +2,8 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from config import Config
 from flask_migrate import Migrate
+import os
+
 def create_app(config_class=Config):
     # Set static folder to sibling frontend directory
     frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'frontend'))
