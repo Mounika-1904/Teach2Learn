@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert(data.error || 'Registration failed');
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('Connection error');
+                console.error('Registration error:', error);
+                alert(`Connection error: ${error.message || 'The server may be starting up or is unreachable.'}`);
             }
         });
     }
@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert(data.error || 'Login failed');
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('Connection error');
+                console.error('Login error:', error);
+                alert(`Connection error: ${error.message || 'The server may be starting up or is unreachable.'}`);
             }
         });
     }

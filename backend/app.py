@@ -76,18 +76,23 @@ def create_app(config_class=Config):
         print(f"DATABASE ATTEMPT: {safe_uri}")
         
         try:
-            print("DB_INIT: Checking for existing tables...")
-            # Simple check for existing table (e.g. User) to avoid heavy db.create_all() every time
+            print("DB_INIT: Inspecting database structure...")
             from sqlalchemy import inspect
             inspector = inspect(db.engine)
-            if 'user' in inspector.get_table_names():
-                print("DB_INIT: Tables already exist. Skipping create_all.")
+            existing_tables = inspector.get_table_names()
+            print(f"DB_INIT: Found existing tables: {existing_tables}")
+            
+            if 'user' in existing_tables:
+                print("DB_INIT: Essential tables (user) exist. Skipping create_all.")
             else:
-                print("DB_INIT: Tables missing. Running create_all...")
+                print("DB_INIT: Essential tables missing. Attempting create_all...")
                 db.create_all()
-                print("DB_INIT: Database tables created.")
+                print("DB_INIT: Database tables created successfully.")
             
         except Exception as e:
+            print(f"DB_INIT_WARNING: Inspector failed or table creation error: {str(e)}")
+            print("This is sometimes expected if the database is already fully initialized or permissions are restricted.")
+            # We don't raise here because the app might still work if tables exist but inspection fails
             print(f"CRITICAL ERROR during database init: {str(e)}")
             import traceback
             traceback.print_exc()
